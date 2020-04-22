@@ -1,7 +1,7 @@
 /* Assignment1.c - driver code for the
                    lexical analyzer */
 #include <stdio.h>
-#include "LexicalAnalyzer.h"
+#include "./LexicalAnalyzer.c"
 
 /******************************************************/
 /* main driver */

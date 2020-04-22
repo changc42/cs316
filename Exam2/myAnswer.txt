@@ -1,0 +1,22 @@
+void S(){
+  if( (nextToken = la.getToken()) == PROCSYM ){
+    if( (nextToken = la.getToken()) == IDENT){
+      if( (nextToken = la.getToken()) == ISSYM){
+        DecPart();
+        if( (nextToken = la.getToken()) == BEGINSYM){
+          SeqOfStmt();
+          if( (nextToken = la.getToken()) == ENDSYM){
+            if( (nextToken = la.getToken()) == ){
+            if( (nextToken = la.getToken()) == ){
+            
+            }else error("Missing  symbol");
+            }else error("Missing  symbol");
+          }else error("Missing end symbol");
+        }else error("Missing begin symbol");
+      }
+      else error("Missing is symbol");
+    }
+    else error("Missing ident symbol");
+  }
+  else error("Missing procedure symbol");
+}

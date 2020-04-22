@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "LexicalAnalyzer.h"
+#include "./LexicalAnalyzer.h"
 
 /* Global declarations */
 /* Variables */
@@ -17,8 +17,14 @@ Token token;
 
 /* Function declarations */
 void addChar();
+//adds "nextChar" to lexeme
+
 void getChar();
+//sets "nextChar" equal to the next char in the file
+//sets "charClass" equal to the class of "nextChar"
+
 void getNonBlank();
+//keeps calling getChar until nextChar is not a space
 
 /* Character classes */
 #define LETTER 0
@@ -46,8 +52,7 @@ void initialize(FILE *fp)
 }
 
 /*****************************************************/
-/* lookup - a function to lookup operators and parentheses
-            and return the token */
+/* lookup - when charClass is UNKNOWN, sets "nextToken" equal to corresponding token*/
 void lookup(char  ch)
 {
   switch  (ch)
@@ -118,8 +123,8 @@ void getNonBlank()
 }
 
 /*****************************************************/
-/* getToken - a simple lexical analyzer for arithmetic 
-              expressions */
+/* getToken - acts based on "nextChar" and "charClass". From this starting point, builds a "lexeme" and 
+sets "nextToken". Sets "token" to the values of "lexeme" and "nextToken", and returns "token"*/
 Token getToken()
 {
   lexLen = 0;
@@ -156,7 +161,7 @@ Token getToken()
                   lexeme[2] = 'F';
                   lexeme[3] = 0;
                   break;
- } /* End of switch */
+  } /* End of switch */
 
   token.tokenCode = nextToken;
   strcpy(token.lexemeString, lexeme);
