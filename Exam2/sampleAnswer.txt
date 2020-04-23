@@ -1,0 +1,82 @@
+void S( )
+{
+  nextToken = la.getToken();
+  if (nextToken == PROCSYM)
+  {
+    nextToken = la.getToken();
+    if (nextToken == IDENT)
+    {
+      nextToken = la.getToken();
+      if (nextToken == ISSYM)
+      {
+        nextToken = la.getToken();
+        DecPart();
+        if (nextToken == BEGINSYM)
+        {
+          nextToken = la.getToken();
+          SeqOfStmt();
+          if (nextToken == ENDSYM)
+          {
+            nextToken = la.getToken();
+            if (nextToken == SEMICOLON)
+            {
+              nextToken = la.getToken();
+              if (nextToken == EOI)
+                Print(“Program syntactically correct.”);
+              else
+                error(“Did not reach the end of the file.”);
+            }
+            else
+              error(“Missing Semicolon.”);
+          }
+          else
+            error(“Missing End Symbol.”);
+        }
+        else
+          error(“Missing Begin Symbol.”);
+      }
+      else
+        error(“Missing Is Symbol.”);
+    }
+    else
+      error(“Missing an Identifier.”);
+  }
+  else
+    error(“Missing Procedure Symbol.”);
+}
+
+void DecPart( )
+{
+  while (nextToken == IDENT) ObjectDec();
+}
+
+void ObjectDec()
+{
+  nextToken = la.getToken();
+  while (nextToken == COMMA)
+  {
+    nextToken = la.getToken();
+    if (nextToken == IDENT)
+      nextToken = la.getToken();
+    else
+      error(“Missing an Identifier.”);
+  }
+
+  if (nextToken == COLON)
+  {
+    nextToken = la.getToken();
+    if (nextToken == BOOLSYM || nextToken == INTSYM)
+    {
+      nextToken = la.getToken();
+      if (nextToken == SEMICOLON)
+        nextToken = la.getToken();
+      else
+        error(“Missing Semicolon.”);
+    }
+    else
+      error(“Missing Boolean or Integer Symbol.”);
+  }
+  else
+    error(“Missing Colon.”);
+}
+

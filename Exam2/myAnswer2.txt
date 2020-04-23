@@ -1,3 +1,6 @@
+try again to move getToken into functioni top
+// cannot move getToken to top of functions because while loops will get the first Token before a function is called
+
 void S( ) 
 { 
   nextToken = la.getToken(); 
@@ -10,11 +13,9 @@ void S( )
       nextToken = la.getToken(); 
       if (nextToken == ISSYM) 
       { 
-        nextToken = la.getToken(); 
         DecPart(); 
         if (nextToken == BEGINSYM) 
-        { 
-          nextToken = la.getToken(); 
+        {  
           SeqOfStmt(); 
           if (nextToken == ENDSYM) 
           { 
@@ -48,21 +49,17 @@ void S( )
  
 void DecPart( ) 
 { 
-  while (nextToken == IDENT) ObjectDec(); 
+  do{
+    ObjectDec();
+    nextToken = la.getToken();
+  }
+  while (nextToken == IDENT); 
 } 
  
 void ObjectDec() 
 { 
-  nextToken = la.getToken(); 
-  while (nextToken == COMMA) 
-  { 
-    nextToken = la.getToken(); 
-    if (nextToken == IDENT) 
-      nextToken = la.getToken(); 
-    else 
-      error(“Missing an Identifier.”); 
-  } 
- 
+  IdentList();
+
   if (nextToken == COLON) 
   { 
     nextToken = la.getToken(); 
@@ -79,11 +76,25 @@ void ObjectDec()
   } 
   else 
     error(“Missing Colon.”); 
-} 
+}
+
+void IdentList(){
+  nextToken = la.getToken();
+  if(nextToken == IDENT){
+    nextToken = la.getToken();
+  }
+  else error("Missing ident symbol");
+
+  while(nextToken == COMMA){
+    IdentList();
+  };
+  
+}
 
 
 void SeqOfStmt(){
   do{
+    nextToken = la.getToken();
     Statement();
   }while(nextToken == NULLSYM
         || nextToken == IDENT
@@ -200,16 +211,12 @@ void Expression(){
       || nextToken == LEQ
       || nextToken == GTR
       || nextToken == GEQ){
-    nextToken = la.getToken();
     SimpExpr();
   }
 }
 
 void SimpExpr(){
   do{
-    if(nextToken == PLUS || nextToken == MINUS){
-      nextToken = la.getToken();
-    }
     Term();
   }while(nextToken == PLUS || nextToken == MINUS);
 }
@@ -217,11 +224,6 @@ void SimpExpr(){
 //call getToken at end
 void Term(){
   do{
-    if(nextToken == TIMES
-          || nextToken == SLASH
-          || nextToken == REMSYM){
-      nextToken = la.getToken();
-    }
     Primary();
   }while(nextToken == TIMES
           || nextToken == SLASH
