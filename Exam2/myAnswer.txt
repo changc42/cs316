@@ -3,7 +3,6 @@ void S( )
   nextToken = la.getToken(); 
   if (nextToken == PROCSYM) 
   { 
-    
     nextToken = la.getToken(); 
     if (nextToken == IDENT) 
     { 
@@ -94,7 +93,6 @@ void SeqOfStmt(){
         || nextToken == NEWLINE);
 }
 
-//only ever called inside SeqOfStmt
 void Statement(){
   if(nextToken == NULLSYM){
     nextToken = la.getToken();
@@ -214,7 +212,6 @@ void SimpExpr(){
   }while(nextToken == PLUS || nextToken == MINUS);
 }
 
-//call getToken at end
 void Term(){
   do{
     if(nextToken == TIMES

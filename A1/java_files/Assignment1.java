@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-class Assignment1{
+public class Assignment1{
   public static void main(String[] args){    
     LexicalAnalyzer myLA = new LexicalAnalyzer(args[0]);
     Token token;
