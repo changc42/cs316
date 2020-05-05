@@ -1,1 +1,1 @@
-null(sum+47)/total
+(sum + additional) * total
